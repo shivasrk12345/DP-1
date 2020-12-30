@@ -1,0 +1,32 @@
+class Solution:
+    
+    def fun(self, idx, amount,coins,dp):
+        if(amount == 0):
+            return 0;
+        if(idx == len(coins) or amount <0 ):
+            return -1;
+        if(dp[idx][amount] != -2):
+            return dp[idx][amount];
+        
+        p = self.fun(idx, amount - coins[idx], coins,dp);
+        np = self.fun(idx +1, amount, coins,dp);
+        
+        if(p == -1 and np != -1):
+            dp[idx][amount] = np;
+            return np;
+        elif(p != -1 and np == -1):
+            dp[idx][amount] = 1 + p;
+            return 1 + p;
+        elif(p !=-1 and np != -1):
+            dp[idx][amount] = min(1 + p, np);
+            return min(1 + p, np);
+        else:
+            dp[idx][amount] = -1;
+            return -1;
+        
+    
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        n = len(coins);
+        dp = [[-2]*(amount+1) for i in range(n+1)];
+        return self.fun(0, amount, coins, dp)
+        
