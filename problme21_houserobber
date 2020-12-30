@@ -1,0 +1,18 @@
+class Solution:
+    
+    def fun(self, idx, nums, dp):
+        if(idx >= len(nums)):
+            return 0;
+        if(dp[idx] != -1):
+            return dp[idx];
+        
+        p = nums[idx] + self.fun(idx +2, nums, dp);
+        np = self.fun(idx + 1, nums,dp);
+        
+        dp[idx] = max(p, np);
+        return dp[idx];
+    
+    def rob(self, nums: List[int]) -> int:
+        dp = [-1 for i in range(len(nums))];
+        return self.fun(0, nums, dp);
+        
